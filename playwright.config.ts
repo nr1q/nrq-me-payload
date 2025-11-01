@@ -36,7 +36,6 @@ export default defineConfig({
   webServer: {
     command: 'pnpm dev',
     reuseExistingServer: true,
-    // url: 'http://localhost:3000',
     url: 'https://nrq-me-payload.vercel.app/',
   },
 })
