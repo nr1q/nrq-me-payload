@@ -34,6 +34,7 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     vercelBlobStorage({
+      enabled: true,
       collections: {
         media: true,
       },

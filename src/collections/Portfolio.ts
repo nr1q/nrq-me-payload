@@ -36,7 +36,7 @@ export const Portfolio: CollectionConfig = {
     //   //}),
     // },
     {
-      name: 'url',
+      name: 'link',
       label: 'URL',
       type: 'text',
     },
@@ -49,6 +49,11 @@ export const Portfolio: CollectionConfig = {
         }
       }
     },
+    {
+      name: 'previewImage',
+      type: 'upload',
+      relationTo: 'media',
+    },
   ],
-  upload: true,
+  // upload: true,
 }
