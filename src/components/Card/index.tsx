@@ -1,33 +1,52 @@
 'use client'
-import { cn } from '@/utilities/ui'
-import useClickableCard from '@/utilities/useClickableCard'
+
 import Link from 'next/link'
 import React, { Fragment } from 'react'
+import { CollectionSlug } from 'payload'
+import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
-import type { Post } from '@/payload-types'
+import type { Post, Work } from '@/payload-types'
 
+import { cn } from '@/utilities/ui'
+import useClickableCard from '@/utilities/useClickableCard'
+import RichText from '@/components/RichText'
 import { Media } from '@/components/Media'
 
 export type CardPostData = Pick<Post, 'slug' | 'categories' | 'meta' | 'title'>
+  | Pick<Work, 'slug' | 'title' | 'content' | 'meta' | 'heroImage'>
 
 export const Card: React.FC<{
   alignItems?: 'center'
   className?: string
   doc?: CardPostData
-  relationTo?: 'posts'
+  relationTo?: CollectionSlug
   showCategories?: boolean
   title?: string
 }> = (props) => {
   const { card, link } = useClickableCard({})
   const { className, doc, relationTo, showCategories, title: titleFromProps } = props
 
-  const { slug, categories, meta, title } = doc || {}
+  const { slug, meta, title } = doc || {}
   const { description, image: metaImage } = meta || {}
 
+  const href = `/${relationTo}/${slug}`
+  const content = doc && 'content' in doc
+    ? doc?.content
+    : {
+      root: {
+        type: 'root',
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        version: 1,
+        children: [],
+      }
+    }
+  const image = (doc && 'heroImage' in doc) ? doc?.heroImage : undefined
+  const categories = doc && 'categories' in doc ? doc?.categories : []
   const hasCategories = categories && Array.isArray(categories) && categories.length > 0
   const titleToUse = titleFromProps || title
   const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
-  const href = `/${relationTo}/${slug}`
 
   return (
     <article
@@ -38,10 +57,11 @@ export const Card: React.FC<{
       ref={card.ref}
     >
       <div className="relative w-full ">
-        {!metaImage && <div className="">No image</div>}
-        {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="33vw" />}
+        {!(metaImage || image) && <div className="">No image</div>}
+        {!image && metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="33vw" />}
+        {image && typeof image !== 'string' && <Media resource={image} size="50vw" />}
       </div>
-      <div className="p-4">
+      <div className="py-4">
         {showCategories && hasCategories && (
           <div className="uppercase text-sm mb-4">
             {showCategories && hasCategories && (
@@ -70,14 +90,15 @@ export const Card: React.FC<{
         )}
         {titleToUse && (
           <div className="prose">
-            <h3>
-              <Link className="not-prose" href={href} ref={link.ref}>
+            <h3 className="text-3xl mb-4">
+              {relationTo === 'works' ? <>{titleToUse}</> : <Link className="not-prose" href={href} ref={link.ref}>
                 {titleToUse}
-              </Link>
+              </Link>}
             </h3>
           </div>
         )}
         {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
+        {content && <RichText className="p-0" data={content as DefaultTypedEditorState} />}
       </div>
     </article>
   )
