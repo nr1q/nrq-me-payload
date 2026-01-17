@@ -11,6 +11,7 @@
   h6 {
     font-size: unset;
     font-weight: unset;
+    font-family: var(--font-unytour);
   }
 
   :root {

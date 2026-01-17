@@ -90,7 +90,7 @@ export const Card: React.FC<{
         )}
         {titleToUse && (
           <div className="prose">
-            <h3 className="text-3xl mb-4">
+            <h3 className="text-2xl mb-4">
               {relationTo === 'works' ? <>{titleToUse}</> : <Link className="not-prose" href={href} ref={link.ref}>
                 {titleToUse}
               </Link>}

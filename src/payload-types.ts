@@ -1739,6 +1739,7 @@ export interface Header {
  */
 export interface Footer {
   id: string;
+  footerContent?: string | null;
   navItems?:
     | {
         link: {
@@ -1790,6 +1791,7 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  footerContent?: T;
   navItems?:
     | T
     | {

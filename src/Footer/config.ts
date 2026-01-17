@@ -10,6 +10,10 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
+      name: 'footerContent',
+      type: 'textarea',
+    },
+    {
       name: 'navItems',
       type: 'array',
       fields: [
@@ -21,7 +25,7 @@ export const Footer: GlobalConfig = {
       admin: {
         initCollapsed: true,
         components: {
-          RowLabel: '@/Footer/RowLabel#RowLabel',
+          RowLabel: '@/Footer/RowLabel',
         },
       },
     },
