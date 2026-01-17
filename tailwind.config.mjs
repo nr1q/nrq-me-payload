@@ -94,6 +94,7 @@ const config = {
         warning: 'hsl(var(--warning))',
       },
       fontFamily: {
+        unytour: ['var(--font-unytour)'],
         mono: ['var(--font-geist-mono)'],
         sans: ['var(--font-geist-sans)'],
       },
