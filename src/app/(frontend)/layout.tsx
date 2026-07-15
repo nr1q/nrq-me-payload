@@ -35,6 +35,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+        <script defer src="https://cloud.umami.is/script.js" data-website-id="b50951ed-b588-4900-a4c4-f91fa49a1a9e"></script>
       </head>
       <body>
         <Providers>
